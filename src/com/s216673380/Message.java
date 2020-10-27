@@ -1,10 +1,11 @@
 package com.s216673380;
 
 public class Message {
-    private String mTopic, mContent;
+    private String mTopic;
+    private Object mContent;
     private int mPublisherId;
 
-    public Message(int publisherId, String topic, String content){
+    public Message(int publisherId, String topic, Object content){
         mPublisherId = publisherId;
         mTopic = topic;
         mContent = content;
@@ -22,11 +23,11 @@ public class Message {
         mTopic = topic;
     }
 
-    public String getContent() {
+    public Object getContent() {
         return mContent;
     }
 
-    public void setContent(String content) {
+    public void setContent(Object content) {
         mContent = content;
     }
 
