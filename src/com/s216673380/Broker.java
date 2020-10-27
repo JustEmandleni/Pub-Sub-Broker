@@ -23,6 +23,12 @@ public class Broker {
     public void addMessage(Message newMessage){
         mMessagesList.add(newMessage);
     }
+
+    /**
+     * Allow Subscriber to register an indeterminate number of parameters
+     * @param newSubscriber : the calling Subscriber
+     * @param topics : one or more topics
+     */
     public void addSubscriber(Subscriber newSubscriber, String...topics) {
         for(String currentTopic : topics) {
             if(isExisting(currentTopic)) {
@@ -42,6 +48,11 @@ public class Broker {
         }
     }
 
+    /**
+     * Allow the calling Subscriber to deregister an indeterminate number of parameters
+     * @param subscriberToRemove : the calling subscriber
+     * @param topics : one or more topics
+     */
     public void removeSubscriber(Subscriber subscriberToRemove, String...topics) {
         for(String currentTopic : topics) {
             if (isExisting(currentTopic)) {
@@ -54,6 +65,9 @@ public class Broker {
         }
     }
 
+    /**
+     * Forwards messages to all subscribers that registered an interest in particularly specified topic(s)
+     */
     public void fowardMessagesToAllSubscribers() {
         while (!mMessagesList.isEmpty()) {
             for (int i = 0; i < mMessagesList.size(); i++) {
@@ -71,5 +85,4 @@ public class Broker {
     private boolean isExisting(String...topic){
         return mTopicSubscribers.containsKey(topic);
     }
-
 }
