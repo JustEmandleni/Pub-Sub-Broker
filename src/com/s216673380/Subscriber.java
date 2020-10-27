@@ -13,15 +13,11 @@ public class Subscriber {
         broker.removeSubscriber(this, topic);
     }
 
-    public void getNewSubscriptionMessages(String topic, Broker broker){ //getMessforSubscrTopi
-        broker.getSubscriberMessages(this, topic);
-    }
-
-    public ArrayList<Message> getAllMessages() {
+    public ArrayList<Message> getMessages() {
         return mMessages;
     }
 
-    public void setAllMessages(ArrayList<Message> messages) {
-        mMessages = messages;
+    public void setAllMessages(ArrayList<Message> subscriberMessages) {
+        mMessages = subscriberMessages;
     }
 }
