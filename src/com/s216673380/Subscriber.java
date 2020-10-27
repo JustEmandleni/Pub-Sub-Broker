@@ -6,18 +6,18 @@ public class Subscriber {
     private ArrayList<Message> mMessages = new ArrayList<>();
 
     public void register(Broker broker, String...topic){
-        broker.addSubscriber(this, topic);
+        broker.subscribe(this, topic);
     }
 
     public void deregister(Broker broker, String...topic){
-        broker.removeSubscriber(this, topic);
+        broker.unsubscribe(this, topic);
     }
 
     public ArrayList<Message> getMessages() {
         return mMessages;
     }
 
-    public void setAllMessages(ArrayList<Message> subscriberMessages) {
-        mMessages = subscriberMessages;
+    public void addSubcrMessage(Message newMessage) {
+        mMessages.add(newMessage);
     }
 }

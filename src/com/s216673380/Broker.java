@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Broker {
-    ArrayList<Message> mMessagesList = new ArrayList<>(); //List of published messages
+    ArrayList<Message> mMessagesList; //List of published messages
     HashMap<String, ArrayList<Subscriber>> mTopicSubscribers; //Maps each Topic string to a Subscriber list
 
     private static Broker sBrokerInstance;
@@ -17,6 +17,7 @@ public class Broker {
     }
 
     private Broker(){
+        this.mMessagesList = new ArrayList<>();
         this.mTopicSubscribers = new HashMap<>();
     }
 
@@ -29,7 +30,7 @@ public class Broker {
      * @param newSubscriber : the calling Subscriber
      * @param topics : one or more topics
      */
-    public void addSubscriber(Subscriber newSubscriber, String...topics) {
+    public void subscribe(Subscriber newSubscriber, String...topics) {
         for(String currentTopic : topics) {
             if(isExisting(currentTopic)) {
                 ArrayList<Subscriber> subscribersList = mTopicSubscribers.get(currentTopic);
@@ -53,7 +54,7 @@ public class Broker {
      * @param subscriberToRemove : the calling subscriber
      * @param topics : one or more topics
      */
-    public void removeSubscriber(Subscriber subscriberToRemove, String...topics) {
+    public void unsubscribe(Subscriber subscriberToRemove, String...topics) {
         for(String currentTopic : topics) {
             if (isExisting(currentTopic)) {
                 ArrayList<Subscriber> subscribersList = mTopicSubscribers.get(currentTopic);
@@ -66,18 +67,21 @@ public class Broker {
     }
 
     /**
-     * Forwards messages to all subscribers that registered an interest in particularly specified topic(s)
+     * Forwards messages to all subscribers subscribed to a particular topic
+     * @param topic : the particular topic.
      */
-    public void fowardMessagesToAllSubscribers() {
-        while (!mMessagesList.isEmpty()) {
+    public void publish(String topic) {
+        if(isExisting(topic)) {
             for (int i = 0; i < mMessagesList.size(); i++) {
-                Message currentMessage = mMessagesList.remove(i);
+                Message currentMessage = mMessagesList.get(i);
                 ArrayList<Subscriber> subscribersList = mTopicSubscribers.get(currentMessage.getTopic());
                 for (Subscriber currentSubscriber : subscribersList) {
                     ArrayList<Message> subscriberMessages = currentSubscriber.getMessages();
-                    subscriberMessages.add(currentMessage);
-                    currentSubscriber.setAllMessages(subscriberMessages);
+                    //subscriberMessages.add(currentMessage);
+                    //currentSubscriber.addSubcrMessage(subscriberMessages);
+                    currentSubscriber.addSubcrMessage(currentMessage);
                 }
+                mMessagesList.remove(i);
             }
         }
     }

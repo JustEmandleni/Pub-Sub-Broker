@@ -2,17 +2,13 @@ package com.s216673380;
 
 public class Message {
     private String mTopic;
-    private Object mContent;
+    private String mContent;
     private int mPublisherId;
 
-    public Message(int publisherId, String topic, Object content){
+    public Message(int publisherId, String topic, String content){
         mPublisherId = publisherId;
         mTopic = topic;
         mContent = content;
-    }
-
-    public boolean hasSame(String topic){
-        return mTopic.equalsIgnoreCase(topic);
     }
 
     public String getTopic() {
@@ -23,11 +19,11 @@ public class Message {
         mTopic = topic;
     }
 
-    public Object getContent() {
+    public String getContent() {
         return mContent;
     }
 
-    public void setContent(Object content) {
+    public void setContent(String content) {
         mContent = content;
     }
 
